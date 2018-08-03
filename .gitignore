@@ -1,0 +1,28 @@
+# Files
+*.o
+*.suo
+*.sln
+*.csproj
+*.apk
+*.log
+.DS_Store
+*.userprefs
+*.vscode
+*.zip
+Assets/StreamingAssets.meta
+
+# Folders
+Assets/StreamingAssets
+Assets/Resources/.vscode
+Library
+Temp
+Logs
+Worlds
+CppCore
+levedbMap
+UnityPackageManager
+.vs
+product/build/.vscode
+product/build/__pycache__
+tool
+
