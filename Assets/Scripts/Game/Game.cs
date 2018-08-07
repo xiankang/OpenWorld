@@ -7,6 +7,19 @@ using Core.RepresentLogic;
 public class Game : MonoBehaviour {
     public LifeCycle _LifeCycle { get; private set; } = null;
 
+    public Player _localPlayer { get; set; } = null;
+
+    public static Game _instance = null;
+
+    protected uint _gameTime = 0;
+
+    private ClientCommander _clientCommander = null;
+
+    public uint GetGameTime()
+    {
+        return _gameTime;
+    }
+
     private void Awake()
     {
         //Debug.Log("Game Awake()");
@@ -19,6 +32,7 @@ public class Game : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        _instance = this;
         _LifeCycle = gameObject.AddComponent<LifeCycle>();
         _LifeCycle.Add(0, new InteractionManager());
 
@@ -38,8 +52,11 @@ public class Game : MonoBehaviour {
         string mapPath = "Game/Map/CactusPack/World";
         yield return World.DoLoadMap(mapPath);
 
-        string heroPath = "Game/Model/M2_4";
-        yield return World.DoLoadHero(heroPath);
+        //这里先客户端生成一个local player
+        _localPlayer = new GameObject("_localPlayer").AddComponent<Player>();
+
+        //
+        _clientCommander = gameObject.AddComponent<ClientCommander>();
     }
 
     IEnumerator RefreshProgress(string moduleName, int moduleIndex, int moduleCount, string moduleSubInfo)
@@ -56,6 +73,7 @@ public class Game : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        _gameTime += (uint)Time.deltaTime * 1000;
         //Debug.Log("Game Update()");
     }
 
