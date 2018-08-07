@@ -19,7 +19,23 @@ public class BMove : Behavior
         if (goalState != activeState)
             return;
 
-        //
+        Unit unit = _brain.GetUnit();
+        if (unit == null)
+            return;
+
+        //处理移动逻辑
+        Vector3 dirWalk = unit.transform.forward * _v3Dir.z + unit.transform.right * _v3Dir.x;
+        dirWalk.y = 0;
+        dirWalk.Normalize();
+        Vector3 deltaMove = dirWalk * unit.GetMoveSpeed() * Time.deltaTime;
+        deltaMove.y = unit.IsGround() ? -0.1f : deltaMove.y - unit._gravity * Time.deltaTime;
+
+        unit.GetCharacterController().Move(deltaMove);
+
+        //再处理表现状态
+
+        //这里处理一帧就结束行为
+        SetFlag(BSR_END | BSR_SUCCESS);
     }
     public override void BeginBehavior()
     {

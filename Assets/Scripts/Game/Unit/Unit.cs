@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Core.Utils.Log;
 
 public class Unit : VisualEntity {
     public bool _isMobile = true;
@@ -8,9 +9,12 @@ public class Unit : VisualEntity {
     public Inventory _inventory = null;
     public Brain _brain = null;
     public uint _orderSequence = 1;
+    public float _moveSpeed = 2.5f;
+    public float _gravity = 17.5f;
 
-	// Use this for initialization
-	protected void Start () {
+    private CharacterController _characterController = null;
+    // Use this for initialization
+    protected void Start () {
         base.Start();
         if (_inventory == null)
         {
@@ -20,6 +24,11 @@ public class Unit : VisualEntity {
         {
             _brain = transform.Find("brain").GetComponent<Brain>();
         }
+
+        _characterController = gameObject.GetComponent<CharacterController>();
+        if (!_characterController)
+            LogHelper.FATAL("Unit", "no Character Controller");
+
         _brain.SetUnit(this);
         _brain.Init();
     }
@@ -28,6 +37,11 @@ public class Unit : VisualEntity {
 	void Update () {
 		
 	}
+
+    public CharacterController GetCharacterController()
+    {
+        return _characterController;
+    }
 
     public uint PlayerCommand(UnitCommand cmd)
     {
@@ -70,5 +84,8 @@ public class Unit : VisualEntity {
         return Physics.Raycast(transform.position, Vector3.down, 0.1f, ~(1 << 26));
     }
 
-
+    public float GetMoveSpeed()
+    {
+        return _moveSpeed + _inventory.GetMoveSpeed();
+    }
 }
