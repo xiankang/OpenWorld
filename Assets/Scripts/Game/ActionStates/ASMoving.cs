@@ -55,7 +55,17 @@ public class ASMoving : ActionState {
             return false;
         }
 
+        //
+        _movement = Vector3.zero;
 
+        if(_moveTime == Game._instance.GetGameTime())
+        {
+            unit.SetAnim(EActionStateAnim.RUN);
+        } else
+        {
+            unit.SetAnim(EActionStateAnim.IDLE);
+        }
+        
         return true;
     }
 
@@ -66,6 +76,7 @@ public class ASMoving : ActionState {
             return false;
 
         //动画
+        unit.SetAnim(EActionStateAnim.IDLE);
 
         ClearFlag(ASR_ACTIVE);
         ClearFlag(ASR_PAUSED);
@@ -73,5 +84,8 @@ public class ASMoving : ActionState {
         return true;
     }
 
-
+    public void SetMovement(Vector3 movement)
+    {
+        _movement = movement;
+    }
 }

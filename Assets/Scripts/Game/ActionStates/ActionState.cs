@@ -9,6 +9,15 @@ public enum EActionStateIDs
     ASID_COUNT
 }
 
+public enum EActionStateAnim
+{
+    IDLE = 0, //空闲
+    RUN = 1,//
+    JUMP = 2,//
+    DEAD = 3,//
+    ATTACK = 4,//
+}
+
 public abstract class ActionState {
     public static readonly uint ASR_ACTIVE = Bit.BIT(0);
     public static readonly uint ASR_COMMITTED = Bit.BIT(1);

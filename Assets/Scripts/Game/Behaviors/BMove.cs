@@ -32,9 +32,9 @@ public class BMove : Behavior
 
         unit.GetCharacterController().Move(deltaMove);
 
-        //再处理表现状态
-
-        //这里处理一帧就结束行为
+        ASMoving movingState = goalState as ASMoving;
+        movingState.SetMovement(deltaMove);
+        //这里处理一帧就结束行为来进行处理，之后再优化
         SetFlag(BSR_END | BSR_SUCCESS);
     }
     public override void BeginBehavior()
