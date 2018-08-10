@@ -42,6 +42,8 @@ public abstract class Behavior
         return _level;
     }
 
+    public Brain GetBrain() { return _brain; }
+    public Unit GetSelf() { return _self; }
     public void SetIssuedClientNumber(int clientNumber)
     {
         _issuedClientNumber = clientNumber;
@@ -192,6 +194,16 @@ public abstract class Behavior
         return (_flags & BSR_END) == 0;
     }
 
+    public virtual bool Validate()
+    {
+        if(_brain == null || _self == null)
+        {
+            SetFlag(BSR_END);
+            return false;
+        }
+
+        return true;
+    }
     public abstract void Update();
     public abstract void BeginBehavior();
     public abstract void EndBehavior();

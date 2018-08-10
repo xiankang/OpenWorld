@@ -47,6 +47,43 @@ public class QueueType
     public static byte NUM_QUEUE_TYPES = 4;
 }
 
+public enum EEntityToolAction
+{
+    TOOL_ACTION_INVALID,
+
+    TOOL_ACTION_PASSIVE,
+    TOOL_ACTION_TOGGLE,
+    TOOL_ACTION_NO_TARGET,
+    TOOL_ACTION_TARGET_POSITION,
+    TOOL_ACTION_TARGET_ENTITY,
+    TOOL_ACTION_GLOBAL,
+    TOOL_ACTION_TARGET_SELF,
+    TOOL_ACTION_FACING,
+    TOOL_ACTION_SELF_POSITION,
+    TOOL_ACTION_ATTACK,
+    TOOL_ACTION_ATTACK_TOGGLE,
+    TOOL_ACTION_TARGET_DUAL,
+    TOOL_ACTION_TARGET_DUAL_POSITION,
+    TOOL_ACTION_TARGET_VECTOR,
+    TOOL_ACTION_TARGET_ENTITY_VECTOR,
+    TOOL_ACTION_TARGET_CURSOR,
+};
+
+public class DefaultValue<T>
+{
+    public static T GetDefaultEmptyValue()
+    {
+        T t = default(T);
+        return t;
+    }
+}
+
+//public class DefaultValue<float>
+//{
+//    public static float GetDefaultEmptyValue() { return 0.0f; }
+//}
+
+
 
 
 

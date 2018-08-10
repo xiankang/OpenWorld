@@ -91,8 +91,24 @@ public class Brain : MonoBehaviour {
         if (_behaviors.Count > 0)
         {
             behavior = _behaviors.Peek();
-            behavior.Update();
 
+            if(behavior.GetBrain() != this)
+            {
+                Debug.LogWarning("Behavior's unit does not match it's owner's unit");
+            }
+            if(behavior.GetSelf() != _unit)
+            {
+                Debug.LogWarning("Behavior's unit does not match brain's unit, the behavior will try to control a different unit");
+            }
+
+            if (behavior.Validate())
+            {
+                if ((behavior.GetFlags() & Behavior.BSR_NEW) != 0)
+                    behavior.BeginBehavior();
+
+                behavior.Update();
+            }
+            
             if (behavior.IsEnd())
             {
                 behavior.EndBehavior();
@@ -191,7 +207,7 @@ public class Brain : MonoBehaviour {
                             Tool tool = obj.GetComponent<Tool>();
                             if (tool != null)
                             {
-                                popFront = !tool._isNonInterrupting;
+                                popFront = !tool.NonInterrupting;
                             }
                         }
                     }
@@ -214,7 +230,7 @@ public class Brain : MonoBehaviour {
                 behavior = new BAttack(this, _unit);
                 break;
             case EUnitCommand.UNITCMD_TOOL:
-                behavior = new BTool(this, _unit);
+                behavior = new BTool(this, _unit, cmd._param);
                 break;
             default:
                 Debug.LogWarning("Brain ProcessCommand: Unrecognized Unit Command");
@@ -261,7 +277,7 @@ public class Brain : MonoBehaviour {
                                 Tool tool = obj.GetComponent<Tool>();
                                 if (tool != null)
                                 {
-                                    popFront = !tool._isNonInterrupting;
+                                    popFront = !tool.NonInterrupting;
                                 }
                             }
                         }

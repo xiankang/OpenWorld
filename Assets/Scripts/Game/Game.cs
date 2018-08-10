@@ -20,6 +20,16 @@ public class Game : MonoBehaviour {
         return _gameTime;
     }
 
+    public static uint GetCooldownEndTime(uint time, uint duration)
+    {
+        if (duration == uint.MaxValue)
+            return uint.MaxValue;
+        else if (time == uint.MaxValue || duration == 0)
+            return 0;
+        else
+            return time + duration;
+    }
+
     private void Awake()
     {
         //Debug.Log("Game Awake()");

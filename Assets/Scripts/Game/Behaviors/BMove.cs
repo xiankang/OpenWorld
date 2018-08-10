@@ -52,6 +52,7 @@ public class BMove : Behavior
 
         ClearFlag(BSR_NEW);
     }
+
     public override void EndBehavior()
     {
         _brain.SetMoving(false);

@@ -60,7 +60,11 @@ public class ASMoving : ActionState {
 
         if(_moveTime == Game._instance.GetGameTime())
         {
-            unit.SetAnim(EActionStateAnim.RUN);
+            if(unit.GetAnim() != EActionStateAnim.RUN)
+            {
+                unit.SetAnim(EActionStateAnim.RUN);
+            }
+                
         } else
         {
             unit.SetAnim(EActionStateAnim.IDLE);

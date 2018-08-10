@@ -24,6 +24,12 @@ public class ClientCommander : MonoBehaviour
         {
             GiveOrder(ECommanderOrder.CMDR_ORDER_MOVE, moveDir, QueueType.QUEUE_NONE);
         }
+
+        //施放技能
+        if (Input.GetKey(KeyCode.E))
+        {
+            ActivateTool(0, Game._instance._localPlayer._hero, true, QueueType.QUEUE_BACK);
+        }
     }
 
     void GiveOrder(ECommanderOrder eOrder, Vector3 v3, byte yQueue, uint param = 0)
@@ -81,5 +87,48 @@ public class ClientCommander : MonoBehaviour
         }
 
         return dir;
+    }
+
+    public void ActivateTool(byte slot, Unit ownerUnit, bool isClick, byte yQueue)
+    {
+        if (ownerUnit == null)
+            return;
+
+        Tool tool = ownerUnit._inventory.GetTool(slot);
+        if (tool == null)
+            return;
+
+        if (tool.GetLevel() < 1 && tool.GetMaxLevel() > 0)
+            return;
+
+        //不能使用tool,提示
+        if (!tool.CanOrder())
+        {
+            Debug.LogFormat("Can'n order this tool in slot {0}", slot);
+            return;
+        }
+
+        switch (tool.ActionType)
+        {
+            case EEntityToolAction.TOOL_ACTION_PASSIVE:
+                break;
+            case EEntityToolAction.TOOL_ACTION_TOGGLE:
+            case EEntityToolAction.TOOL_ACTION_NO_TARGET:
+            case EEntityToolAction.TOOL_ACTION_GLOBAL:
+            case EEntityToolAction.TOOL_ACTION_TARGET_SELF:
+            case EEntityToolAction.TOOL_ACTION_FACING:
+            case EEntityToolAction.TOOL_ACTION_SELF_POSITION:
+            case EEntityToolAction.TOOL_ACTION_ATTACK_TOGGLE:
+                {
+
+                    UnitCommand cmd = new UnitCommand(EUnitCommand.UNITCMD_TOOL);
+                    cmd._param = tool.gameObject.GetInstanceID();
+                    cmd._yQueue = (byte)yQueue;
+                    //这里先设置默认0
+                    cmd._clientNumber = 0;
+                    uint orderSequence = ownerUnit.PlayerCommand(cmd);
+                }
+                break;
+        }
     }
 }

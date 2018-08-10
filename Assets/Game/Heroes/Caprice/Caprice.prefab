@@ -1327,6 +1327,10 @@ MonoBehaviour:
   _inventory: {fileID: 114476327129327030}
   _brain: {fileID: 114094281422690796}
   _orderSequence: 1
+  _moveSpeed: 2.5
+  _gravity: 17.5
+  _maxMana: []
+  _maxManaPerLevel: 0
 --- !u!114 &114476327129327030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1338,11 +1342,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd43e32b7cf28645be3bb753fd88695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slaveList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _slaveList:
+  - {fileID: 114380831018258558, guid: 1423a5f031262f848a1d7240ba9e6ab3, type: 2}
+  SlaveList: []
 --- !u!119 &119904481366622094
 Projector:
   m_ObjectHideFlags: 1
