@@ -30,6 +30,13 @@ public class Unit : VisualEntity {
     public float _moveSpeed = 2.5f;
     public float _gravity = 17.5f;
 
+    public virtual float GetBaseCastSpeed() { return 1.0f;}
+    public virtual float GetCastSpeed()
+    {
+        if (IsIllusion())
+            return GetBaseCastSpeed();
+        return GetBaseCastSpeed() + _inventory.GetCastSpeed();
+    }
     public List<float> _maxMana;
     public float _maxManaPerLevel = 0;
     public float BaseMaxMana
@@ -235,4 +242,24 @@ public class Unit : VisualEntity {
         return HasUnitFlags(UNIT_FLAG_ILLUSION);
     }
 
+    public Projectile CreateProjectile(GameObject obj, Vector3 v3Target, uint level)
+    {
+        Projectile projectile = SpawnProjectile(obj, v3Target, level);
+        if(projectile == null)
+        {
+            return null;
+        }
+
+        //设置project属性
+
+        return projectile;
+    }
+
+    public Projectile SpawnProjectile(GameObject obj, Vector3 v3End, uint level)
+    {
+        GameObject projectileObj = GameObject.Instantiate(obj);
+        Projectile projectile = projectileObj.GetComponent<Projectile>();
+        //设置projectile
+        return projectile;
+    }
 }

@@ -21,6 +21,14 @@ public class GameEntity : MonoBehaviour {
         return null;
     }
 
+    public static T GetGameEntity<T>(int instanceId) where T : GameEntity
+    {
+        GameObject obj = GetEntity(instanceId);
+        if (obj)
+            return obj.GetComponent<T>();
+        return null;
+    }
+
     protected virtual void Start()
     {
         _entityDirectory[gameObject.GetInstanceID()] = gameObject;

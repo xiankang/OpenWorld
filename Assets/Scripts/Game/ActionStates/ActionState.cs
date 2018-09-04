@@ -15,7 +15,10 @@ public enum EActionStateAnim
     RUN = 1,//
     JUMP = 2,//
     DEAD = 3,//
-    ATTACK = 4,//
+    ABILITY1 = 4,//
+    ABILITY2 = 5,
+    ABILITY3 = 6,
+    ABILITY4 = 7
 }
 
 public abstract class ActionState {
@@ -78,16 +81,19 @@ public abstract class ActionState {
 
     protected void SetFlag(uint flag)
     {
+        //Debug.LogFormat("flag {0}", flag);
         _actionStateFlags |= flag;
     }
 
     protected void ClearFlag(uint flag)
     {
+        //Debug.LogFormat("clear flag {0}", flag);
         _actionStateFlags &= ~flag;
     }
 
     protected void ClearAllFlags()
     {
+        Debug.LogFormat("ClearAllFlags");
         _actionStateFlags = 0;
     }
 

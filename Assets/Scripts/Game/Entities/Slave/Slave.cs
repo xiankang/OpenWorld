@@ -22,6 +22,7 @@ public class Slave : GameEntity {
 
     protected float _maxShield;
     protected Inventory _inventory;
+    protected CombatAction _combatAction;
 
     public List<float> _manaCostReduction;
     public float ManaCostReduction
@@ -196,6 +197,6 @@ public class Slave : GameEntity {
 
     public override void Spawn()
     {
-
+        _combatAction = gameObject.GetComponent<CombatAction>();
     }
 }

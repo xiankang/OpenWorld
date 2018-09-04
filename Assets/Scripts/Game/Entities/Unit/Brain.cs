@@ -105,8 +105,10 @@ public class Brain : MonoBehaviour {
             {
                 if ((behavior.GetFlags() & Behavior.BSR_NEW) != 0)
                     behavior.BeginBehavior();
-
-                behavior.Update();
+                else
+                {
+                    behavior.Update();
+                }
             }
             
             if (behavior.IsEnd())
@@ -126,6 +128,7 @@ public class Brain : MonoBehaviour {
             }
         }
 
+        bool isProcessed = false;
         for(int i=0; i<(int)EActionStateIDs.ASID_COUNT; ++i)
         {
             if (_actionStates[i].IsActive())
@@ -133,10 +136,33 @@ public class Brain : MonoBehaviour {
                 if (!_actionStates[i].ContinueStateAction())
                 {
                     _actionStates[i].EndState(3);
+                } else
+                {
+                    isProcessed = true;
                 }
             }
         }
-	}
+        if (isProcessed == false)
+            UnpauseNextActionState();
+
+    }
+
+    public void UnpauseNextActionState()
+    {
+        if (!GetReady())
+            return;
+
+        for (int i = 0; i < (int)EActionStateIDs.ASID_COUNT; ++i)
+        {
+            if (_actionStates[i].IsPaused())
+            {
+                if (!_actionStates[i].ContinueStateAction())
+                {
+                    _actionStates[i].UnpauseState();
+                }
+            }
+        }
+    }
 
     public void SetUnit(Unit unit)
     {

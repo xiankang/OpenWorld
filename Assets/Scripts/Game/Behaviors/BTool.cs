@@ -50,12 +50,32 @@ public class BTool : Behavior
         if (activatingState.IsActive())
             return;
 
+        if((GetFlags() & BSR_CAST) != 0)
+        {
+            ClearFlag(BSR_CAST);
+            if (!activatingState.IsInterrupted())
+                SetFlag(BSR_END);
+            return;
+        }
+
         BeginCast(_self.transform.forward);
+
+        Debug.Log("111111111111111111111111111111");
+        if((GetFlags() & BSR_CAST)!=0 && !activatingState.IsActive())
+        {
+            Debug.Log("22222222222222222222222222222222");
+            ClearFlag(BSR_CAST);
+            if (!activatingState.IsInterrupted())
+            {
+                SetFlag(BSR_END);
+                Debug.Log("BTool BSR_END");
+            }
+        }
     }
 
     private void BeginCast(Vector3 v3Target)
     {
-
+        Debug.Log("BTool BeginCast");
         ActionState goalState = _brain.GetActionState(EActionStateIDs.ASID_ATTACKING);
         ASAttacking asAttacking = goalState as ASAttacking;
         asAttacking.SetToolIndex(_index);
@@ -135,4 +155,5 @@ public class BTool : Behavior
 
         return true;
     }
+
 }

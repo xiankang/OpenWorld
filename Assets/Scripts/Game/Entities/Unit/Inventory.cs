@@ -12,6 +12,11 @@ public class Inventory : MonoBehaviour {
         return 0;
     }
 
+    public float GetCastSpeed()
+    {
+        return 0;
+    }
+
     public float GetCooldownSpeed()
     {
         return 0;

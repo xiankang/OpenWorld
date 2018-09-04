@@ -83,7 +83,7 @@ public class Game : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        _gameTime += (uint)Time.deltaTime * 1000;
+        _gameTime += (uint)(Time.deltaTime * 1000);
         //Debug.Log("Game Update()");
     }
 

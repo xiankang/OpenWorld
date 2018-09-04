@@ -28,6 +28,11 @@ public class ASMoving : ActionState {
 
         //}
 
+        if (unit.GetAnim() != EActionStateAnim.RUN)
+        {
+            unit.SetAnim(EActionStateAnim.RUN);
+        }
+
         SetFlag(ASR_ACTIVE);
         ClearFlag(ASR_PAUSED);
 
@@ -60,10 +65,10 @@ public class ASMoving : ActionState {
 
         if(_moveTime == Game._instance.GetGameTime())
         {
-            if(unit.GetAnim() != EActionStateAnim.RUN)
-            {
-                unit.SetAnim(EActionStateAnim.RUN);
-            }
+            //if(unit.GetAnim() != EActionStateAnim.RUN)
+            //{
+            //    unit.SetAnim(EActionStateAnim.RUN);
+            //}
                 
         } else
         {
